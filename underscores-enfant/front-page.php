@@ -29,7 +29,9 @@ get_header();
         // The Query
         $args = array(
             "category_name" => "nouvelle",
-            "posts_per_page" => 3
+            "posts_per_page" => 3,
+            "orderby" => "date",
+            "order" => "DESC"
         );
         $query1 = new WP_Query( $args );
         
@@ -51,18 +53,24 @@ get_header();
         
         
         /* The 2nd Query (without global var) */
-        /*
-        $query2 = new WP_Query( $args2 );
         
+        $args2 = array(
+            "category_name" => "evenement"
+        );
+        $query2 = new WP_Query( $args2 );
+        $CatID = get_the_category($query2->post->ID);
+
+        echo "<h1>". category_description($CatID[0]). "</h1>";
         // The 2nd Loop
         while ( $query2->have_posts() ) {
             $query2->the_post();
             echo '<li>' . get_the_title( $query2->post->ID ) . '</li>';
+            echo get_the_post_thumbnail(null, "thumbnail");
         }
         
         // Restore original Post Data
         wp_reset_postdata();
-        */
+        
         ?>
 
 		</main><!-- #main -->
